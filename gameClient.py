@@ -74,20 +74,35 @@ class SignUpModal(ModalView):
         self.dismiss()
 
     # 회원가입 창으로 돌아가는 로직을 작성하세요
-        # 예를 들어, 입력된 정보를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
+    # 예를 들어, 입력된 정보를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
 
 
 # 확인창 클래스
 class ConfirmationModal(ModalView):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.size_hint = (0.6, 0.4)
 
-    def dispatch_yes(self, *args):
-        self.dismiss()
+        confirmation_layout = BoxLayout(orientation="vertical", padding=40, spacing=20)
+        confirmation_label = Label(text="Are you sure you want to complete membership registration?", font_size=20,
+                                   bold=True)
+        confirmation_layout_button = BoxLayout(orientation="horizontal", padding=20, spacing=20)
+
+        yes_button = Button(text="Yes", on_release=self.on_yes)
+        no_button = Button(text="No", on_release=self.on_no)
+
+        confirmation_layout_button.add_widget(yes_button)
+        confirmation_layout_button.add_widget(no_button)
+
+        confirmation_layout.add_widget(confirmation_label)
+        confirmation_layout.add_widget(confirmation_layout_button)
+
+        self.add_widget(confirmation_layout)
+
+    def on_yes(self, *args):
         self.dispatch('on_yes')
 
-    def dispatch_no(self, *args):
+    def on_no(self, *args):
         self.dispatch('on_no')
 
 
