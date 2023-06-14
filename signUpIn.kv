@@ -185,3 +185,23 @@
             size_hint: None, None
             size: 200, 50
             on_release: root.dismiss()
+
+<ConfirmationModal>:
+    size_hint: 0.6, 0.4
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 40
+        spacing: 20
+
+        Label:
+            text: "Are you sure you want to complete membership registration?"
+            font_size: 20
+
+        Button:
+            text: "Yes"
+            on_release: root.dispatch('on_yes')
+
+        Button:
+            text: "No"
+            on_release: root.dispatch('on_no')
