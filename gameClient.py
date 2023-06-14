@@ -5,6 +5,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.popup import Popup
+from kivy.uix.modalview import ModalView
 from kivy.core.text import LabelBase
 from kivy.lang import Builder
 
@@ -12,78 +13,8 @@ from kivy.lang import Builder
 LabelBase.register(name='Roboto', fn_regular='loginFont.ttf')
 
 # Kivy Builder로 화면 레이아웃 정의
-Builder.load_string('''
-<LoginScreen>:
-    orientation: 'vertical'
-    padding: [50, 100, 50, 100]
-    spacing: 10
+Builder.load_file('signUpIn.kv')
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 30
-        Label:
-            text: '아이디'
-            font_name: 'Roboto'
-        TextInput:
-            id: username_entry
-            font_name: 'Roboto'
-            font_size: 18
-            multiline: False
-            on_text_validate: root.validate_email()
-            
-    Label:
-        id: warning_label
-        text: 'asdf'
-        height: 10
-        font_name: 'Roboto'
-        font_size: 14
-        color: (1, 0, 0, 1)
-
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 30
-        Label:
-            text: '비밀번호'
-            font_name: 'Roboto'
-        TextInput:
-            id: password_entry
-            font_name: 'Roboto'
-            font_size: 18
-            multiline: False
-            password: True
-
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 30
-        CheckBox:
-            id: save_id_checkbox
-        Label:
-            text: '아이디 저장'
-            font_name: 'Roboto'
-
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 30
-        CheckBox:
-            id: auto_login_checkbox
-        Label:
-            text: '자동 로그인'
-            font_name: 'Roboto'
-
-    Button:
-        text: '로그인'
-        font_name: 'Roboto'
-        font_size: 18
-        size_hint: 1, None
-        height: 30
-        on_release: root.login()
-
-    
-''')
 
 class LoginScreen(BoxLayout):
     def validate_email(self):
@@ -103,6 +34,52 @@ class LoginScreen(BoxLayout):
         print(f'Password: {password}')
         print(f'Save ID: {save_id}')
         print(f'Auto Login: {auto_login}')
+
+    def open_signup_modal(self):
+        modal_view = SignUpModal()
+        modal_view.open()
+
+class SignUpModal(ModalView):
+    def validate_email(self, instance):
+        email = self.ids.email_input.text
+        password = self.ids.password_input.text
+        confirm_password = self.ids.confirm_password_input.text
+        name = self.ids.name_input.text
+        dob = self.ids.dob_input.text
+
+    def submit_signup(self):
+        email = self.ids.email_input.text
+        password = self.ids.password_confirm_input.text
+        name = self.ids.name_input.text
+        dob = self.ids.dob_input.text
+
+        # Perform signup validation logic here
+        # ...
+
+    def show_confirmation(self, *args):
+        confirmation_modal = ConfirmationModal()  # 확인창 객체 생성
+        confirmation_modal.open()  # 확인창 열기
+
+# 확인창 클래스
+class ConfirmationModal(ModalView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint = (0.6, 0.4)
+
+        confirmation_layout = BoxLayout(orientation="vertical", padding=40, spacing=20)
+        confirmation_label = Label(text="Are you sure you want to complete membership registration?", font_size=20, bold=True)
+        confirmation_layout_button = BoxLayout(orientation="horizontal", padding=20, spacing=20)
+
+        yes_button = Button(text="Yes", on_release=self.dismiss)
+        no_button = Button(text="No", on_release=self.dismiss)
+
+        confirmation_layout_button.add_widget(yes_button)
+        confirmation_layout_button.add_widget(no_button)
+
+        confirmation_layout.add_widget(confirmation_label)
+        confirmation_layout.add_widget(confirmation_layout_button)
+
+        self.add_widget(confirmation_layout)
 
 class MyApp(App):
     def build(self):

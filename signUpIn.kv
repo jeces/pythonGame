@@ -1,0 +1,187 @@
+<CustomTextInput@TextInput>:
+    font_name: 'Arial'
+    multiline: False
+    padding: [10, 10, 10, 10]
+    size_hint: None, None
+    size: 200, 40
+    background_normal: ''
+    background_active: ''
+    background_color: (1, 1, 1, 1)
+    foreground_color: (0, 0, 0, 1)
+
+<CustomLabel@Label>:
+    font_name: 'Arial'
+    size_hint: None, None
+    size: self.texture_size
+    color: (0, 0, 0, 1)
+<LoginScreen>:
+    orientation: 'vertical'
+    padding: [50, 100, 50, 100]
+    spacing: 10
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: 30
+
+        TextInput:
+            id: username_entry
+            hint_text: 'Email'
+            font_name: 'Roboto'
+            font_size: 18
+            multiline: False
+            on_text: root.validate_email()
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: 10
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            id: warning_label
+            text: ''
+            font_name: 'Roboto'
+            font_size: 10
+            color: (1, 0, 0, 1)
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: 30
+        TextInput:
+            id: password_entry
+            hint_text: 'Password'
+            font_name: 'Roboto'
+            font_size: 18
+            multiline: False
+            password: True
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: 10
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        CheckBox:
+            id: save_id_checkbox
+        Label:
+            text: 'Remember Me'
+            font_name: 'Roboto'
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: 10
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Label:
+            text: ''
+        CheckBox:
+            id: auto_login_checkbox
+            valign: 'right'
+        Label:
+            text: 'Auto Login'
+            font_name: 'Roboto'
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: 30
+
+        Button:
+            text: 'Sign Up'
+            font_name: 'Roboto'
+            font_size: 18
+            size_hint: 1, None
+            height: 30
+            on_release: root.open_signup_modal()
+
+        Button:
+            text: 'Sign In'
+            font_name: 'Roboto'
+            font_size: 18
+            size_hint: 1, None
+            height: 30
+            on_release: root.login()
+
+<SignUpModal>:
+    size_hint: 0.8, 0.8
+    auto_dismiss: False
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 20]
+
+        CustomTextInput:
+            id: email_input
+            hint_text: 'Email'
+            on_text_validate: self.focus = False
+
+        CustomTextInput:
+            id: password_input
+            hint_text: 'Password'
+            password: True
+            on_text_validate: self.focus = False
+
+        CustomTextInput:
+            id: confirm_password_input
+            hint_text: 'Confirm Password'
+            password: True
+            on_text_validate: self.focus = False
+
+        CustomTextInput:
+            id: name_input
+            hint_text: 'Name'
+            on_text_validate: self.focus = False
+
+        CustomTextInput:
+            id: dob_input
+            hint_text: 'Date of Birth'
+            on_text_validate: self.focus = False
+
+        Button:
+            text: 'Sign Up'
+            size_hint: None, None
+            size: 200, 50
+            on_release: root.show_confirmation()
+
+        Button:
+            text: 'Cancel'
+            size_hint: None, None
+            size: 200, 50
+            on_release: root.dismiss()
