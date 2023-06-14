@@ -61,57 +61,37 @@ class SignUpModal(ModalView, EventDispatcher):
 
     def show_confirmation(self, *args):
         confirmation_modal = ConfirmationModal()  # 확인창 객체 생성
-        confirmation_modal.on_yes = self.return_to_login
-        confirmation_modal.on_no = self.return_to_signup
+        confirmation_modal.on_yes = self.return_to_login  # Yes 버튼 클릭 시 로그인 창으로 돌아가도록 설정
+        confirmation_modal.on_no = self.return_to_signup  # No 버튼 클릭 시 회원가입 창으로 돌아가도록 설정
         confirmation_modal.open()  # 확인창 열기
 
     def return_to_login(self):
-        print("Returning to login...")
+        print('Returning to login...')
         self.dismiss()
         # 로그인 창으로 돌아가는 로직을 작성하세요
         # 예를 들어, 앱의 상태를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
 
     def return_to_signup(self):
-        print("Returning to signup...")
-
-    # 회원가입 창으로 돌아가는 로직을 작성하세요
-    # 예를 들어, 입력된 정보를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
+        print('Returning to signup...')
+        # 회원가입 창으로 돌아가는 로직을 작성하세요
+        # 예를 들어, 입력된 정보를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
 
 
 # 확인창 클래스
 class ConfirmationModal(ModalView):
+    on_yes = ObjectProperty(None)
+    on_no = ObjectProperty(None)
 
-    def on_yess(self, *args):
-        print("1")
+    def close_confirmation(self, confirmed):
         self.dismiss()
-        self.dispatch('on_yes')  # 이벤트 이름 변경
-        print("2")
-
-    def on_nos(self, *args):
-        self.dismiss()
-        self.dispatch('on_no')
-
-    # def close_confirmation(self, confirmed):
-    #     self.dismiss()
-    #     if confirmed:
-    #         print('Membership registration confirmed')
-    #         # Perform additional logic for confirmed registration
-    #         self.return_to_login()
-    #     else:
-    #         print('Membership registration cancelled')
-    #         # Perform additional logic for cancelled registration
-    #         self.return_to_signup()
-
-    # on_yes = ObjectProperty(None)
-    # on_no = ObjectProperty(None)
-
-    #
-    # def on_y(self, *args):
-    #     pass
-    #
-    # def on_n(self, *args):
-    #     pass
-
+        if confirmed:
+            print('Membership registration confirmed')
+            if self.on_yes:
+                self.on_yes()
+        else:
+            print('Membership registration cancelled')
+            if self.on_no:
+                self.on_no()
 
 class MyApp(App):
     def build(self):

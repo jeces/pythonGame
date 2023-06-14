@@ -200,7 +200,7 @@
             spacing: '20dp'
             Button:
                 text: 'Yes'
-                on_release: root.on_yes()
+                on_release: root.close_confirmation(True)
             Button:
                 text: 'No'
-                on_release: root.on_no()
+                on_release: root.close_confirmation(False)
