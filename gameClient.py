@@ -41,7 +41,7 @@ class LoginScreen(BoxLayout):
         modal_view.open()
 
 
-class SignUpModal(ModalView):
+class SignUpModal(ModalView, EventDispatcher):
     def validate_email(self, instance):
         email = self.ids.email_input.text
         password = self.ids.password_input.text
@@ -78,7 +78,7 @@ class SignUpModal(ModalView):
 
 
 # 확인창 클래스
-class ConfirmationModal(ModalView):
+class ConfirmationModal(ModalView, EventDispatcher):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.size_hint = (0.6, 0.4)
@@ -100,7 +100,9 @@ class ConfirmationModal(ModalView):
         self.add_widget(confirmation_layout)
 
     def on_yes(self, *args):
+        print("1")
         self.dispatch('on_yes')
+        print("2")
 
     def on_no(self, *args):
         self.dispatch('on_no')
