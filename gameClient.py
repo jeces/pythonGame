@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.event import EventDispatcher
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -20,7 +21,7 @@ class LoginScreen(BoxLayout):
     def validate_email(self):
         email = self.ids.username_entry.text
         if email and '@' not in email:
-            self.ids.warning_label.text = '유효한 이메일을 입력해주세요.'
+            self.ids.warning_label.text = 'Please enter a valid email'
         else:
             self.ids.warning_label.text = ''
 
@@ -38,6 +39,7 @@ class LoginScreen(BoxLayout):
     def open_signup_modal(self):
         modal_view = SignUpModal()
         modal_view.open()
+
 
 class SignUpModal(ModalView):
     def validate_email(self, instance):
@@ -58,7 +60,21 @@ class SignUpModal(ModalView):
 
     def show_confirmation(self, *args):
         confirmation_modal = ConfirmationModal()  # 확인창 객체 생성
+        confirmation_modal.bind(on_yes=self.return_to_login)  # 확인창이 닫힐 때 로그인 창으로 돌아가도록 바인딩
+        confirmation_modal.bind(on_no=self.return_to_signup)  # "아니오" 버튼 누를 때 회원가입 창으로 돌아가도록 바인딩
         confirmation_modal.open()  # 확인창 열기
+
+    def return_to_login(self, *args):
+        print("2")
+        # self.dismiss()  # 회원가입 모달 창 닫기
+        # 로그인 창으로 돌아가는 로직을 작성하세요
+        # 예를 들어, 앱의 상태를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
+
+    def return_to_signup(self, *args):
+        print("3")
+        # 회원가입 창으로 돌아가는 로직을 작성하세요
+        # 예를 들어, 입력된 정보를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
+
 
 # 확인창 클래스
 class ConfirmationModal(ModalView):
@@ -67,11 +83,12 @@ class ConfirmationModal(ModalView):
         self.size_hint = (0.6, 0.4)
 
         confirmation_layout = BoxLayout(orientation="vertical", padding=40, spacing=20)
-        confirmation_label = Label(text="Are you sure you want to complete membership registration?", font_size=20, bold=True)
+        confirmation_label = Label(text="Are you sure you want to complete membership registration?", font_size=20,
+                                   bold=True)
         confirmation_layout_button = BoxLayout(orientation="horizontal", padding=20, spacing=20)
 
-        yes_button = Button(text="Yes", on_release=self.dismiss)
-        no_button = Button(text="No", on_release=self.dismiss)
+        yes_button = Button(text="Yes", on_release=self.dispatch_yes)
+        no_button = Button(text="No", on_release=self.dispatch_no)
 
         confirmation_layout_button.add_widget(yes_button)
         confirmation_layout_button.add_widget(no_button)
@@ -81,9 +98,17 @@ class ConfirmationModal(ModalView):
 
         self.add_widget(confirmation_layout)
 
+    def dispatch_yes(self, *args):
+        self.dispatch("on_yes")
+
+    def dispatch_no(self, *args):
+        self.dispatch("on_no")
+
+
 class MyApp(App):
     def build(self):
         return LoginScreen()
+
 
 if __name__ == '__main__':
     MyApp().run()
