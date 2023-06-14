@@ -93,6 +93,7 @@ class ConfirmationModal(ModalView):
             if self.on_no:
                 self.on_no()
 
+
 class MyApp(App):
     def build(self):
         return LoginScreen()
