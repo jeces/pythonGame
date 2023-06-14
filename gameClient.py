@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.event import EventDispatcher
+from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -60,52 +61,56 @@ class SignUpModal(ModalView, EventDispatcher):
 
     def show_confirmation(self, *args):
         confirmation_modal = ConfirmationModal()  # 확인창 객체 생성
-        confirmation_modal.bind(on_yes=self.return_to_login, on_no=self.return_to_signup)  # 확인창이 닫힐 때 로그인 창으로 돌아가도록 바인딩
+        confirmation_modal.on_yes = self.return_to_login
+        confirmation_modal.on_no = self.return_to_signup
         confirmation_modal.open()  # 확인창 열기
 
-    def return_to_login(self, instance):
+    def return_to_login(self):
         print("Returning to login...")
         self.dismiss()
         # 로그인 창으로 돌아가는 로직을 작성하세요
         # 예를 들어, 앱의 상태를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
 
-    def return_to_signup(self, instance):
+    def return_to_signup(self):
         print("Returning to signup...")
-        self.dismiss()
 
     # 회원가입 창으로 돌아가는 로직을 작성하세요
     # 예를 들어, 입력된 정보를 초기화하거나 다른 화면으로 전환하는 등의 작업을 수행할 수 있습니다.
 
 
 # 확인창 클래스
-class ConfirmationModal(ModalView, EventDispatcher):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.size_hint = (0.6, 0.4)
+class ConfirmationModal(ModalView):
 
-        confirmation_layout = BoxLayout(orientation="vertical", padding=40, spacing=20)
-        confirmation_label = Label(text="Are you sure you want to complete membership registration?", font_size=20,
-                                   bold=True)
-        confirmation_layout_button = BoxLayout(orientation="horizontal", padding=20, spacing=20)
-
-        yes_button = Button(text="Yes", on_release=self.on_yes)
-        no_button = Button(text="No", on_release=self.on_no)
-
-        confirmation_layout_button.add_widget(yes_button)
-        confirmation_layout_button.add_widget(no_button)
-
-        confirmation_layout.add_widget(confirmation_label)
-        confirmation_layout.add_widget(confirmation_layout_button)
-
-        self.add_widget(confirmation_layout)
-
-    def on_yes(self, *args):
+    def on_yess(self, *args):
         print("1")
-        self.dispatch('on_yes')
+        self.dismiss()
+        self.dispatch('on_yes')  # 이벤트 이름 변경
         print("2")
 
-    def on_no(self, *args):
+    def on_nos(self, *args):
+        self.dismiss()
         self.dispatch('on_no')
+
+    # def close_confirmation(self, confirmed):
+    #     self.dismiss()
+    #     if confirmed:
+    #         print('Membership registration confirmed')
+    #         # Perform additional logic for confirmed registration
+    #         self.return_to_login()
+    #     else:
+    #         print('Membership registration cancelled')
+    #         # Perform additional logic for cancelled registration
+    #         self.return_to_signup()
+
+    # on_yes = ObjectProperty(None)
+    # on_no = ObjectProperty(None)
+
+    #
+    # def on_y(self, *args):
+    #     pass
+    #
+    # def on_n(self, *args):
+    #     pass
 
 
 class MyApp(App):
