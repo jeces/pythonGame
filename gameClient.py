@@ -41,6 +41,13 @@ class LoginScreen(BoxLayout):
         modal_view = SignUpModal()
         modal_view.open()
 
+    def on_textinput(self):
+        instance = self.ids.username_entry
+        text = instance.text[-1]
+        full_text = instance.text
+        if text == '\t':
+            self.ids.username_entry.text = full_text[:-1]
+            self.ids.password_entry.focus = True
 
 class SignUpModal(ModalView, EventDispatcher):
     def validate_email(self, instance):

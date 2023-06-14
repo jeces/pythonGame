@@ -14,6 +14,7 @@
     size_hint: None, None
     size: self.texture_size
     color: (0, 0, 0, 1)
+
 <LoginScreen>:
     orientation: 'vertical'
     padding: [50, 100, 50, 100]
@@ -31,7 +32,7 @@
             font_name: 'Roboto'
             font_size: 18
             multiline: False
-            on_text: root.validate_email()
+            on_text: root.validate_email(); root.on_textinput()
 
     BoxLayout:
         orientation: 'horizontal'
