@@ -20,7 +20,7 @@ Builder.load_file('signUpIn.kv')
 
 class LoginScreen(BoxLayout):
     def validate_email(self):
-        email = self.ids.username_entry.text
+        email = self.ids.email_entry.text
         if email and '@' not in email:
             self.ids.warning_label.text = 'Please enter a valid email'
         else:
@@ -28,11 +28,11 @@ class LoginScreen(BoxLayout):
 
     def login(self):
         # 로그인 기능 구현
-        username = self.ids.username_entry.text
+        email = self.ids.email_entry.text
         password = self.ids.password_entry.text
         save_id = self.ids.save_id_checkbox.active
         auto_login = self.ids.auto_login_checkbox.active
-        print(f'Username: {username}')
+        print(f'Email: {email}')
         print(f'Password: {password}')
         print(f'Save ID: {save_id}')
         print(f'Auto Login: {auto_login}')
@@ -42,12 +42,28 @@ class LoginScreen(BoxLayout):
         modal_view.open()
 
     def on_textinput(self):
-        instance = self.ids.username_entry
-        text = instance.text[-1]
-        full_text = instance.text
-        if text == '\t':
-            self.ids.username_entry.text = full_text[:-1]
-            self.ids.password_entry.focus = True
+        print(self.ids.email_entry.focus)
+        print(self.ids.password_entry.focus)
+        if self.ids.email_entry.focus:
+            instance_email = self.ids.email_entry
+            print(instance_email.text)
+            if instance_email.text == "":
+                email_text = instance_email
+            else:
+                email_text = instance_email.text[-1]
+            email_full_text = instance_email.text
+            if (email_text == '\t') & self.ids.email_entry.focus:
+                self.ids.email_entry.text = email_full_text[:-1]
+                self.ids.password_entry.focus = True
+        elif self.ids.password_entry.focus:
+            instance_password = self.ids.password_entry
+            print(instance_password.text)
+            password_text = instance_password.text[-1]
+            password_full_text = instance_password.text
+            if (password_text == '\t') & self.ids.password_entry.focus:
+                self.ids.password_entry.text = password_full_text[:-1]
+                self.ids.email_entry.focus = True
+
 
 class SignUpModal(ModalView, EventDispatcher):
     def validate_email(self, instance):

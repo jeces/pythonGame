@@ -27,7 +27,7 @@
         Label:
             text: ''
         TextInput:
-            id: username_entry
+            id: email_entry
             hint_text: 'Email'
             font_name: 'Roboto'
             font_size: 18
@@ -64,6 +64,7 @@
             font_size: 18
             multiline: False
             password: True
+            on_text: root.on_textinput()
 
     BoxLayout:
         orientation: 'horizontal'
