@@ -2,14 +2,10 @@ from kivy.app import App
 from kivy.event import EventDispatcher
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
-from kivy.uix.checkbox import CheckBox
-from kivy.uix.popup import Popup
 from kivy.uix.modalview import ModalView
 from kivy.core.text import LabelBase
 from kivy.lang import Builder
+import requests
 
 # 폰트 설정
 LabelBase.register(name='Roboto', fn_regular='loginFont.ttf')
@@ -19,6 +15,8 @@ Builder.load_file('signUpIn.kv')
 
 
 class LoginScreen(BoxLayout):
+    SERVER_URL = 'http://127.0.0.1:5000'  # 실제 서버 주소와 포트로 변경해주세요
+
     def validate_email(self):
         email = self.ids.email_entry.text
         if email and '@' not in email:
@@ -37,16 +35,30 @@ class LoginScreen(BoxLayout):
         print(f'Save ID: {save_id}')
         print(f'Auto Login: {auto_login}')
 
+        # 서버로 로그인 요청을 보냄
+        response = requests.post(f'{self.SERVER_URL}/login', data={
+            'email': email,
+            'password': password,
+            'save_id': save_id,
+            'auto_login': auto_login
+        })
+
+        if response.status_code == 200:
+            print('Login success')
+            # 로그인 성공 처리 로직 구현
+            # ...
+        else:
+            print('Login failed')
+            # 로그인 실패 처리 로직 구현
+            # ...
+
     def open_signup_modal(self):
         modal_view = SignUpModal()
         modal_view.open()
 
     def on_textinput(self):
-        print(self.ids.email_entry.focus)
-        print(self.ids.password_entry.focus)
         if self.ids.email_entry.focus:
             instance_email = self.ids.email_entry
-            print(instance_email.text)
             if instance_email.text == "":
                 email_text = instance_email
             else:
@@ -57,8 +69,10 @@ class LoginScreen(BoxLayout):
                 self.ids.password_entry.focus = True
         elif self.ids.password_entry.focus:
             instance_password = self.ids.password_entry
-            print(instance_password.text)
-            password_text = instance_password.text[-1]
+            if instance_password.text == "":
+                password_text = instance_password
+            else:
+                password_text = instance_password.text[-1]
             password_full_text = instance_password.text
             if (password_text == '\t') & self.ids.password_entry.focus:
                 self.ids.password_entry.text = password_full_text[:-1]
