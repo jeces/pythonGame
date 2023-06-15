@@ -44,6 +44,9 @@ def login():
         'save_id': save_id,
         'auto_login': auto_login
     })
+    print("1")
+    print(email)
+    print("1")
 
     return jsonify({'message': 'Logged in successfully'})
 
