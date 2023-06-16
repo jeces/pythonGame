@@ -115,12 +115,19 @@ class SignUpModal(ModalView, EventDispatcher):
         })
 
         if response.status_code == 200:
-            print('SignUo success')
-            # 로그인 성공 처리 로직 구현
-            # ...
+            json_data = response.json()  # JSON 응답을 파싱하여 Python 객체로 변환
+            message = json_data.get('message')
+            if message == 'Logged in successfully':
+                print('Login successful')
+                # 로그인 성공 처리 로직 구현
+                # ...
+            else:
+                print('Login failed:', message)
+                # 로그인 실패 처리 로직 구현
+                # ...
         else:
-            print('SignUo failed')
-            # 로그인 실패 처리 로직 구현
+            print('Login request failed with status code:', response.status_code)
+            # 요청 실패 처리 로직 구현
             # ...
 
     def show_confirmation(self, *args):

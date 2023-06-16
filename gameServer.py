@@ -38,6 +38,14 @@ def login():
         'save_id': save_id,
         'auto_login': auto_login
     })
+    
+    # 로그인 정보 틀리면 다시 돌려줘야함
+    # 임시
+    if email == "123":
+        return jsonify({'message': 'Logged in successfully'})
+    else:
+        return jsonify({'error': 'Invalid email or password'})
+
     print("1")
     print(email)
     print("1")
@@ -62,6 +70,7 @@ def signup():
         'name': name,
         'dob': dob
     })
+    # 이메일 인증 해야함
 
     return jsonify({'message': 'Signed up successfully'})
 
