@@ -1,0 +1,38 @@
+<GameScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        GameArea:
+            id: game
+            size_hint: 1, 0.8
+
+        Button:
+            text: 'Go Back'
+            font_size: 24
+            size_hint: 1, 0.2
+            on_release:
+                app.root.current = 'main'
+                game.on_leave()
+
+<GameArea>:
+    ball: pong_ball
+    player1: player_left
+    player2: player_right
+
+    canvas:
+        Rectangle:
+            pos: self.center_x - 5, 0
+            size: 10, self.height
+
+    PongBall:
+        id: pong_ball
+        center: self.parent.center
+
+    PongPaddle:
+        id: player_left
+        x: root.x
+        center_y: root.center_y
+
+    PongPaddle:
+        id: player_right
+        x: root.width - self.width
+        center_y: root.center_y

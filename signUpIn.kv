@@ -212,8 +212,16 @@
 <GameScreen>:
     BoxLayout:
         orientation: 'vertical'
+
         Label:
-            text: 'Game Screen'
+            text: 'Bounce Game'
+            font_size: 30
+
+        GameArea:
+            id: game_area
+
         Button:
-            text: 'Back to Login'
-            on_release: root.back_to_login()
+            text: 'Start'
+            size_hint: 1, None
+            height: 50
+            on_release: game_area.start_game()
