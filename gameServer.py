@@ -41,17 +41,16 @@ def login():
     
     # 로그인 정보 틀리면 다시 돌려줘야함
     # 임시
-    if email == "123":
-        return jsonify({'message': 'Logged in successfully'})
-    else:
-        return jsonify({'error': 'Invalid email or password'})
+
 
     print("1")
     print(email)
     print("1")
 
-    return jsonify({'message': 'Logged in successfully'})
-
+    if email == "123":
+        return jsonify({'message': 'Logged in successfully'})
+    else:
+        return jsonify({'error': 'Invalid email or password'})
 
 @app.route('/signup', methods=['POST'])
 def signup():
