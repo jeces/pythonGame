@@ -16,130 +16,108 @@
     color: (0, 0, 0, 1)
 
 <LoginScreen>:
-    orientation: 'vertical'
-    padding: [50, 100, 50, 100]
-    spacing: 10
+    FloatLayout:
+        size_hint: None, None
+        size: 300, 300
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 30
-        Label:
-            text: ''
-        TextInput:
-            id: email_entry
-            hint_text: 'Email'
-            font_name: 'Roboto'
-            font_size: 18
-            multiline: False
-            on_text: root.validate_email(); root.on_textinput()
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: '3dp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 10
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            id: warning_label
-            text: ''
-            font_name: 'Roboto'
-            font_size: 12
-            color: (1, 0, 0, 1)
+            CustomTextInput:
+                id: email_entry
+                hint_text: 'Email'
+                font_name: 'Roboto'
+                font_size: 18
+                multiline: False
+                width: '310dp'
+                on_text: root.validate_email(); root.on_textinput()
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 30
-        Label:
-            text: ''
-        TextInput:
-            id: password_entry
-            hint_text: 'Password'
-            font_name: 'Roboto'
-            font_size: 18
-            multiline: False
-            password: True
-            on_text: root.on_textinput()
+            CustomLabel:
+                id: warning_label
+                text: ''
+                font_name: 'Roboto'
+                font_size: 12
+                color: (1, 0, 0, 1)
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 10
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        CheckBox:
-            id: save_id_checkbox
-        Label:
-            text: 'Remember Me'
-            font_name: 'Roboto'
+            CustomTextInput:
+                id: password_entry
+                hint_text: 'Password'
+                font_name: 'Roboto'
+                font_size: 18
+                multiline: False
+                password: True
+                width: '310dp'
+                on_text: root.on_textinput()
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 10
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-        CheckBox:
-            id: auto_login_checkbox
-            valign: 'right'
-        Label:
-            text: 'Auto Login'
-            font_name: 'Roboto'
+            GridLayout:
+                cols: 1
+                spacing: '10dp'
+                pos_hint: {'center_x': 0.5}
+                padding: [-20, 20, 0, 50]
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: '10dp'
+                    Label:
+                        text: ''
+                    Label:
+                        text: ''
+                    Label:
+                        text: ''
+                    CheckBox:
+                        id: save_id_checkbox
+                    Label:
+                        text: 'Remember Me'
+                        font_name: 'Roboto'
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        valign: 'middle'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: '10dp'
+                    Label:
+                        text: ''
+                    Label:
+                        text: ''
+                    Label:
+                        text: ''
+                    CheckBox:
+                        id: auto_login_checkbox
+                    Label:
+                        text: 'Auto Login'
+                        font_name: 'Roboto'
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        valign: 'middle'
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: None
-        height: 30
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Button:
-            text: 'Sign Up'
-            font_name: 'Roboto'
-            font_size: 18
-            size_hint: 1, None
-            height: 30
-            on_release: root.open_signup_modal()
+            GridLayout:
+                cols: 2
+                spacing: '10dp'
+                pos_hint: {'center_x': 0.5}
 
-        Button:
-            text: 'Sign In'
-            font_name: 'Roboto'
-            font_size: 18
-            size_hint: 1, None
-            height: 30
-            on_release: root.login()
+                Button:
+                    text: 'Sign Up'
+                    font_name: 'Roboto'
+                    font_size: 18
+                    size_hint: None, None
+                    #size: self.texture_size
+                    height: '30dp'
+                    width: '150dp'
+                    on_release: root.open_signup_modal()
+
+                Button:
+                    text: 'Sign In'
+                    font_name: 'Roboto'
+                    font_size: 18
+                    size_hint: None, None
+                    #size: self.texture_size
+                    height: '30dp'
+                    width: '150dp'
+                    on_release: root.login()
+
+
 
 <SignUpModal>:
     size_hint: 0.8, 0.8
@@ -229,3 +207,13 @@
             Button:
                 text: 'No'
                 on_release: root.close_confirmation(False)
+
+
+<GameScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Game Screen'
+        Button:
+            text: 'Back to Login'
+            on_release: root.back_to_login()
