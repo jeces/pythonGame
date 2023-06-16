@@ -26,6 +26,7 @@ Builder.load_file('signUpIn.kv')
 # Flask 앱 초기화
 app = Flask(__name__)
 
+
 # Flask 라우트 및 핸들러
 @app.route('/login', methods=['POST'])
 def login():
@@ -50,6 +51,7 @@ def login():
 
     return jsonify({'message': 'Logged in successfully'})
 
+
 @app.route('/signup', methods=['POST'])
 def signup():
     email = request.form.get('email')
@@ -69,6 +71,7 @@ def signup():
     })
 
     return jsonify({'message': 'Signed up successfully'})
+
 
 # 클라이언트와의 연결을 위한 Flask 서버 실행
 if __name__ == '__main__':
