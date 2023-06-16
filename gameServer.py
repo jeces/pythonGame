@@ -1,13 +1,6 @@
 from flask import Flask, request, jsonify
 import firebase_admin
 from firebase_admin import credentials, db
-import requests
-
-from kivy.app import App
-from kivy.event import EventDispatcher
-from kivy.properties import ObjectProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.modalview import ModalView
 from kivy.core.text import LabelBase
 from kivy.lang import Builder
 
