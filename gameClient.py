@@ -14,6 +14,7 @@ LabelBase.register(name='Roboto', fn_regular='loginFont.ttf')
 Builder.load_file('signUpIn.kv')
 
 
+# 로그인
 class LoginScreen(BoxLayout):
     SERVER_URL = 'http://127.0.0.1:5000'  # 실제 서버 주소와 포트로 변경해주세요
 
@@ -78,7 +79,7 @@ class LoginScreen(BoxLayout):
                 self.ids.password_entry.text = password_full_text[:-1]
                 self.ids.email_entry.focus = True
 
-
+# 회원가입
 class SignUpModal(ModalView, EventDispatcher):
     def validate_email(self, instance):
         email = self.ids.email_input.text
