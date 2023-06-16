@@ -148,45 +148,66 @@
     BoxLayout:
         orientation: 'vertical'
         padding: [20, 20, 20, 20]
+        spacing: 10
 
         CustomTextInput:
             id: email_input
             hint_text: 'Email'
             on_text_validate: self.focus = False
+            size_hint_y: None
+            height: '40dp'
 
         CustomTextInput:
             id: password_input
             hint_text: 'Password'
             password: True
             on_text_validate: self.focus = False
+            size_hint_y: None
+            height: '40dp'
 
         CustomTextInput:
             id: confirm_password_input
             hint_text: 'Confirm Password'
             password: True
             on_text_validate: self.focus = False
+            size_hint_y: None
+            height: '40dp'
 
         CustomTextInput:
             id: name_input
             hint_text: 'Name'
             on_text_validate: self.focus = False
+            size_hint_y: None
+            height: '40dp'
 
         CustomTextInput:
             id: dob_input
             hint_text: 'Date of Birth'
             on_text_validate: self.focus = False
+            size_hint_y: None
+            height: '40dp'
 
-        Button:
-            text: 'Sign Up'
-            size_hint: None, None
-            size: 200, 50
-            on_release: root.show_confirmation()
+        Widget:
+            size_hint_y: 0.5
 
-        Button:
-            text: 'Cancel'
-            size_hint: None, None
-            size: 200, 50
-            on_release: root.dismiss()
+        GridLayout:
+            cols: 2
+            spacing: 10
+            size_hint_y: None
+            height: '50dp'
+
+            Button:
+                text: 'Sign Up'
+                size_hint: 1, None
+                height: '50dp'
+                on_release: root.show_confirmation()
+
+            Button:
+                text: 'Cancel'
+                size_hint: 1, None
+                height: '50dp'
+                on_release: root.dismiss()
+
 
 <ConfirmationModal>:
     size_hint: 0.6, 0.4

@@ -5,6 +5,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.modalview import ModalView
 from kivy.core.text import LabelBase
 from kivy.lang import Builder
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
 import requests
 
 # 폰트 설정
@@ -52,6 +54,12 @@ class LoginScreen(BoxLayout):
             print('Login failed')
             # 로그인 실패 처리 로직 구현
             # ...
+            self.show_login_failed_popup()
+
+    def show_login_failed_popup(self):
+        popup = Popup(title='Login Failed', content=Label(text='Invalid email or password.'),
+                      size_hint=(None, None), size=(400, 200))
+        popup.open()
 
     def open_signup_modal(self):
         modal_view = SignUpModal()
@@ -79,6 +87,7 @@ class LoginScreen(BoxLayout):
                 self.ids.password_entry.text = password_full_text[:-1]
                 self.ids.email_entry.focus = True
 
+
 # 회원가입
 class SignUpModal(ModalView, EventDispatcher):
     def validate_email(self, instance):
@@ -97,7 +106,7 @@ class SignUpModal(ModalView, EventDispatcher):
         # Perform signup validation logic here
         # ...
 
-        # 서버로 로그인 요청을 보냄
+        # 서버로 회원가입 요청을 보냄
         response = requests.post(f'{self.SERVER_URL}/signup', data={
             'email': email,
             'password': password,
@@ -113,8 +122,6 @@ class SignUpModal(ModalView, EventDispatcher):
             print('SignUo failed')
             # 로그인 실패 처리 로직 구현
             # ...
-
-
 
     def show_confirmation(self, *args):
         confirmation_modal = ConfirmationModal()  # 확인창 객체 생성
