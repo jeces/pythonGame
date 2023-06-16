@@ -96,6 +96,25 @@ class SignUpModal(ModalView, EventDispatcher):
         # Perform signup validation logic here
         # ...
 
+        # 서버로 로그인 요청을 보냄
+        response = requests.post(f'{self.SERVER_URL}/signup', data={
+            'email': email,
+            'password': password,
+            'name': name,
+            'dob': dob
+        })
+
+        if response.status_code == 200:
+            print('SignUo success')
+            # 로그인 성공 처리 로직 구현
+            # ...
+        else:
+            print('SignUo failed')
+            # 로그인 실패 처리 로직 구현
+            # ...
+
+
+
     def show_confirmation(self, *args):
         confirmation_modal = ConfirmationModal()  # 확인창 객체 생성
         confirmation_modal.on_yes = self.return_to_login  # Yes 버튼 클릭 시 로그인 창으로 돌아가도록 설정
