@@ -22,6 +22,7 @@ class RhythmGame(BoxLayout):
     score = NumericProperty(0)
     song = StringProperty("None")
     progress = NumericProperty(0)
+    button_size = NumericProperty(0)
 
     def __init__(self, **kwargs):
         super(RhythmGame, self).__init__(**kwargs)

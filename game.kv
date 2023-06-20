@@ -47,18 +47,21 @@
                 size_hint: 1, None
                 size: 10, 10
                 on_release: root.check_hit(1)
+
             Button:
                 id: button_2
                 text: "Button 2"
                 size_hint: 1, None
                 size: 10, 10
                 on_release: root.check_hit(2)
+
             Button:
                 id: button_3
                 text: "Button 3"
                 size_hint: 1, None
                 size: 10, 10
                 on_release: root.check_hit(3)
+
             Button:
                 id: button_4
                 text: "Button 4"
@@ -66,9 +69,9 @@
                 size: 10, 10
                 on_release: root.check_hit(4)
 
-    BoxLayout:
-        id: block_layout
-        size_hint: 1, 0.4
+        BoxLayout:
+            id: block_layout
+            size_hint: 1, 0.4
 
 <Block>:
     size_hint: 1, None
@@ -79,8 +82,3 @@
         Rectangle:
             pos: self.pos
             size: self.size
-
-
-
-
-
