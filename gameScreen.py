@@ -1,77 +1,56 @@
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.widget import Widget
 from kivy.graphics import Rectangle
-from kivy.properties import NumericProperty, ObjectProperty, ReferenceListProperty
+from kivy.properties import NumericProperty, ObjectProperty, ReferenceListProperty, StringProperty, Clock
 from kivy.vector import Vector
+import random
+from kivy.animation import Animation
 from kivy.core.window import Window
+
 
 class GameScreen(Screen):
     def __init__(self, **kwargs):
         super(GameScreen, self).__init__(**kwargs)
 
-class PongPaddle(Widget):
+
+class Block(Widget):
+    pass
+
+
+class RhythmGame(BoxLayout):
     score = NumericProperty(0)
-
-    def bounce_ball(self, ball):
-        if self.collide_widget(ball):
-            vx, vy = ball.velocity
-            offset = (ball.center_y - self.center_y) / (self.height / 2)
-            bounced = Vector(-1 * vx, vy)
-            vel = bounced * 1.1
-            ball.velocity = vel.x, vel.y + offset
-
-class PongBall(Widget):
-    velocity_x = NumericProperty(0)
-    velocity_y = NumericProperty(0)
-    velocity = ReferenceListProperty(velocity_x, velocity_y)
-
-    def move(self):
-        self.pos = Vector(*self.velocity) + self.pos
-
-class PongGame(Widget):
-    ball = ObjectProperty(None)
-    player1 = ObjectProperty(None)
-    player2 = ObjectProperty(None)
+    song = StringProperty("None")
+    progress = NumericProperty(0)
 
     def __init__(self, **kwargs):
-        super(PongGame, self).__init__(**kwargs)
-        self.keyboard = Window.request_keyboard(self._keyboard_closed, self)
-        self.keyboard.bind(on_key_down=self._on_keyboard_down)
+        super(RhythmGame, self).__init__(**kwargs)
+        self.register_event_type('on_hit')
+        Clock.schedule_interval(self.create_block, 2)
 
-    def serve_ball(self, vel=(4, 0)):
-        self.ball.center = self.center
-        self.ball.velocity = vel
+    def on_hit(self, button_num):
+        self.score += 100
+        print(f"Button {button_num} was hit!")
 
-    def update(self, dt):
-        self.ball.move()
+    def check_hit(self, button_num):
+        self.dispatch('on_hit', button_num)
 
-        # Bounce off paddles
-        self.player1.bounce_ball(self.ball)
-        self.player2.bounce_ball(self.ball)
+    def create_block(self, dt):
+        # 랜덤으로 블록이 떨어지도록 설정
+        random_button_num = random.randint(1, 4)
 
-        # Bounce off top and bottom
-        if (self.ball.y < 0) or (self.ball.top > self.height):
-            self.ball.velocity_y *= -1
+        block = Block()
+        self.ids.block_layout.add_widget(block)
 
-        # Score points
-        if self.ball.x < self.x:
-            self.player2.score += 1
-            self.serve_ball(vel=(4, 0))
-        if self.ball.x > self.width:
-            self.player1.score += 1
-            self.serve_ball(vel=(-4, 0))
+        # 블록이 버튼 위로 떨어지도록 설정
+        button = self.ids["button_" + str(random_button_num)]
+        x = button.x + button.width / 2 - block.width / 2
+        y = button.y + button.height
+        block.pos = (x, y)
 
-    def _keyboard_closed(self):
-        self.keyboard.unbind(on_key_down=self._on_keyboard_down)
-        self.keyboard = None
+        # 블록이 아래로 이동하도록 애니메이션 설정
+        block_animation = Animation(y=0, duration=2)
+        block_animation.start(block)
 
-    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        if keycode[1] == 'w':
-            self.player1.center_y += 20
-        elif keycode[1] == 's':
-            self.player1.center_y -= 20
-        elif keycode[1] == 'up':
-            self.player2.center_y += 20
-        elif keycode[1] == 'down':
-            self.player2.center_y -= 20
-        return True
+        # 블록이 떨어지는 동안에도 버튼을 누를 수 있도록 설정
+        Clock.schedule_once(lambda dt: self.check_hit(random_button_num), 0.5)

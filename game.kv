@@ -1,38 +1,78 @@
 <GameScreen>:
     BoxLayout:
         orientation: 'vertical'
-        PongGame:
+        RhythmGame:
             id: game
             size_hint: 1, 0.8
 
-        Button:
-            text: 'Go Back'
-            font_size: 24
-            size_hint: 1, 0.2
-            on_release:
-                app.root.current = 'main'
-                game.on_leave()
 
-<PongGame>:
-    ball: pong_ball
-    player1: player_left
-    player2: player_right
-
+<RhythmGame>:
     canvas:
+        Color:
+            rgba: 0, 0, 0, 1
         Rectangle:
-            pos: self.center_x - 5, 0
-            size: 10, self.height
+            pos: self.pos
+            size: self.size
 
-    PongBall:
-        id: pong_ball
-        center: self.parent.center
+    Label:
+        id: score_label
+        text: "Score: " + str(root.score)
+        pos_hint: {"center_x": 0.5, "top": 1}
+        size_hint: 1, 0.1
+        font_size: '30sp'
 
-    PongPaddle:
-        id: player_left
-        x: root.x
-        center_y: root.center_y
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 0.8
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-    PongPaddle:
-        id: player_right
-        x: root.width - self.width
-        center_y: root.center_y
+        Label:
+            id: song_label
+            text: "Now Playing: " + root.song
+            font_size: '24sp'
+
+        ProgressBar:
+            id: progress_bar
+            max: 100
+            value: root.progress
+
+        GridLayout:
+            cols: 4
+            spacing: '10dp'
+            padding: '10dp'
+
+            Button:
+                id: button_1
+                text: "Button 1"
+                on_release: root.check_hit(1)
+            Button:
+                id: button_2
+                text: "Button 2"
+                on_release: root.check_hit(2)
+            Button:
+                id: button_3
+                text: "Button 3"
+                on_release: root.check_hit(3)
+            Button:
+                id: button_4
+                text: "Button 4"
+                on_release: root.check_hit(4)
+
+    BoxLayout:
+        id: block_layout
+        size_hint: 1, 0.4
+
+<Block>:
+    size_hint: None, None
+    size: 100, 100
+    canvas:
+        Color:
+            rgba: 1, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+
+
+
