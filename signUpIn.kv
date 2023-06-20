@@ -207,21 +207,3 @@
             Button:
                 text: 'No'
                 on_release: root.close_confirmation(False)
-
-
-<GameScreen>:
-    BoxLayout:
-        orientation: 'vertical'
-
-        Label:
-            text: 'Bounce Game'
-            font_size: 30
-
-        GameArea:
-            id: game_area
-
-        Button:
-            text: 'Start'
-            size_hint: 1, None
-            height: 50
-            on_release: game_area.start_game()

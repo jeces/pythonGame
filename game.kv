@@ -1,7 +1,7 @@
 <GameScreen>:
     BoxLayout:
         orientation: 'vertical'
-        GameArea:
+        PongGame:
             id: game
             size_hint: 1, 0.8
 
@@ -13,7 +13,7 @@
                 app.root.current = 'main'
                 game.on_leave()
 
-<GameArea>:
+<PongGame>:
     ball: pong_ball
     player1: player_left
     player2: player_right
