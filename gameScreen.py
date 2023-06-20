@@ -49,7 +49,7 @@ class RhythmGame(BoxLayout):
         block.pos = (x, y)
 
         # 블록이 아래로 이동하도록 애니메이션 설정
-        block_animation = Animation(y=0, duration=2)
+        block_animation = Animation(pos=(x, 0), duration=2)
         block_animation.start(block)
 
         # 블록이 떨어지는 동안에도 버튼을 누를 수 있도록 설정
