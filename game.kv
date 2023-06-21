@@ -14,32 +14,45 @@
             pos: self.pos
             size: self.size
 
-    Label:
-        id: score_label
-        text: "Score: " + str(root.score)
-        pos_hint: {"center_x": 0.5, "top": 1}
-        size_hint: 1, 0.1
-        font_size: '30sp'
+    BoxLayout:  # 화면을 수평으로 나누는 BoxLayout 추가
+        orientation: "horizontal"
+        size_hint: 1, 1
 
-    BoxLayout:
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 0.3, 1
+
+            Label:
+                id: score_label
+                text: "Score: " + str(root.score)
+                pos_hint: {"center_x": 0.5, "top": 1}
+                size_hint: 1, 0.1
+                font_size: '30sp'
+
+            Label:
+                id: song_label
+                text: "Now Playing: " + root.song
+                font_size: '24sp'
+
+        BoxLayout:
         orientation: "vertical"
-        size_hint: 1, 0.8
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
-        Label:
-            id: song_label
-            text: "Now Playing: " + root.song
-            font_size: '24sp'
-
-        ProgressBar:
-            id: progress_bar
-            max: 100
-            value: root.progress
+        size_hint: 0.7, 1
+        padding: '10dp'
 
         GridLayout:
             cols: 4
             spacing: '10dp'
             padding: '10dp'
+
+            BoxLayout:
+                id: block_layout
+                size_hint: 1, None
+                height: self.minimum_height  # 블록 높이를 자동으로 조정
+
+            ProgressBar:
+                id: progress_bar
+                max: 100
+                value: root.progress
 
             Button:
                 id: button_1
@@ -69,9 +82,7 @@
                 size: 10, 10
                 on_release: root.check_hit(4)
 
-        BoxLayout:
-            id: block_layout
-            size_hint: 1, 0.4
+
 
 <Block>:
     size_hint: 1, None
