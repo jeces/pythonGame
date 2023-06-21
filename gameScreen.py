@@ -4,6 +4,8 @@ from kivy.uix.widget import Widget
 from kivy.graphics import Rectangle
 from kivy.properties import NumericProperty, ObjectProperty, ReferenceListProperty, StringProperty, Clock
 from kivy.vector import Vector
+from kivy.metrics import dp
+
 import random
 from kivy.animation import Animation
 from kivy.core.window import Window
@@ -45,12 +47,12 @@ class RhythmGame(BoxLayout):
 
         # 블록이 버튼 위로 떨어지도록 설정
         button = self.ids["button_" + str(random_button_num)]
-        x = button.x + button.width / 2 - block.width / 2
+        x = button.center_x - block.width / 2
         y = button.y + button.height
         block.pos = (x, y)
 
         # 블록이 아래로 이동하도록 애니메이션 설정
-        block_animation = Animation(pos=(x, 0), duration=2)
+        block_animation = Animation(pos=(x, -dp(50)), duration=2)
         block_animation.bind(on_complete=self.remove_block)  # 애니메이션 완료 후 제거
         block_animation.start(block)
 

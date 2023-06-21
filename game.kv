@@ -5,98 +5,94 @@
             id: game
             size_hint: 1, 0.8
 
-
 <RhythmGame>:
     canvas:
         Color:
-            rgba: 0, 0, 0, 1
+            rgba: 0.1, 0.1, 0.1, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
     BoxLayout:
-        orientation: "horizontal"
-        size_hint: 1, 1
+        orientation: 'vertical'
+        padding: '20dp'
+
+        Label:
+            id: score_label
+            text: "Score: {}".format(root.score)
+            size_hint_y: None
+            height: '40dp'
+            font_size: '30sp'
+
+        Label:
+            id: song_label
+            text: "Now Playing: {}".format(root.song)
+            size_hint_y: None
+            height: '30dp'
+            font_size: '24sp'
 
         BoxLayout:
-            orientation: "vertical"
-            size_hint: 0.3, 1
+            orientation: 'vertical'
+            size_hint: 1, 0.7
 
-            Label:
-                id: score_label
-                text: "Score: " + str(root.score)
-                pos_hint: {"center_x": 0.5, "top": 1}
-                size_hint: 1, 0.1
-                font_size: '30sp'
-
-            Label:
-                id: song_label
-                text: "Now Playing: " + root.song
-                font_size: '24sp'
-
-        BoxLayout:
-            orientation: "vertical"
-            size_hint: 0.7, 1
-            padding: '10dp'
+            ProgressBar:
+                id: progress_bar
+                max: 100
+                value: root.progress
 
             GridLayout:
                 cols: 1
                 spacing: '10dp'
                 padding: '10dp'
 
-                ProgressBar:
-                    id: progress_bar
-                    max: 100
-                    value: root.progress
-
                 BoxLayout:
                     id: block_layout
                     size_hint: 1, None
-                    height: self.minimum_height  # 블록 높이를 자동으로 조정
+                    height: self.minimum_height
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, None
+            GridLayout:
+                cols: 2
                 spacing: '10dp'
                 padding: '10dp'
 
                 Button:
                     id: button_1
-                    text: "Button 1"
-                    size_hint: None, None
-                    size: 100, 100
+                    text: "1"
+                    size_hint: 0.5, None
+                    height: '60dp'
+                    font_size: '24sp'
                     on_release: root.check_hit(1)
 
                 Button:
                     id: button_2
-                    text: "Button 2"
-                    size_hint: None, None
-                    size: 100, 100
+                    text: "2"
+                    size_hint: 0.5, None
+                    height: '60dp'
+                    font_size: '24sp'
                     on_release: root.check_hit(2)
 
                 Button:
                     id: button_3
-                    text: "Button 3"
-                    size_hint: None, None
-                    size: 100, 100
+                    text: "3"
+                    size_hint: 0.5, None
+                    height: '60dp'
+                    font_size: '24sp'
                     on_release: root.check_hit(3)
 
                 Button:
                     id: button_4
-                    text: "Button 4"
-                    size_hint: None, None
-                    size: 100, 100
+                    text: "4"
+                    size_hint: 0.5, None
+                    height: '60dp'
+                    font_size: '24sp'
                     on_release: root.check_hit(4)
 
-
-
-
 <Block>:
-    size_hint: 1, None
-    size: 10, 10
+    size_hint: None, None
+    size: '60dp', '60dp'
     canvas:
         Color:
-            rgba: 1, 0, 0, 1
+            rgba: 0.8, 0.2, 0.2, 1
         Rectangle:
             pos: self.pos
             size: self.size
