@@ -10,7 +10,7 @@ from kivy.uix.modalview import ModalView
 
 # 로그인
 class LoginScreen(Screen):
-    SERVER_URL = 'http://127.0.0.1:5000'  # 실제 서버 주소와 포트로 변경해주세요
+    SERVER_URL = 'http://127.0.0.1:8000'  # 실제 서버 주소와 포트로 변경해주세요
 
     def __init__(self, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
@@ -33,13 +33,15 @@ class LoginScreen(Screen):
         print(f'Save ID: {save_id}')
         print(f'Auto Login: {auto_login}')
 
-        # 서버로 로그인 요청을 보냄
-        response = requests.post(f'{self.SERVER_URL}/login', data={
+        data = {
             'email': email,
             'password': password,
             'save_id': save_id,
             'auto_login': auto_login
-        })
+        }
+
+        # 서버로 로그인 요청을 보냄
+        response = requests.post(f'{self.SERVER_URL}/login', json=data)
 
         if response.status_code == 200:
             json_data = response.json()  # JSON 응답을 파싱하여 Python 객체로 변환
@@ -114,13 +116,15 @@ class SignUpModal(ModalView, EventDispatcher):
         # Perform signup validation logic here
         # ...
 
-        # 서버로 회원가입 요청을 보냄
-        response = requests.post(f'{self.SERVER_URL}/signup', data={
+        data = {
             'email': email,
             'password': password,
             'name': name,
             'dob': dob
-        })
+        }
+
+        # 서버로 회원가입 요청을 보냄
+        response = requests.post(f'{self.SERVER_URL}/signup', json=data)
 
         if response.status_code == 200:
             # json_data = response.json()  # JSON 응답을 파싱하여 Python 객체로 변환
