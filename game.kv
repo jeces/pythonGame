@@ -21,8 +21,10 @@
             id: score_label
             text: "Score: {}".format(root.score)
             size_hint_y: None
-            height: '40dp'
-            font_size: '30sp'
+            height: '50dp'
+            font_size: '36sp'
+            bold: True
+            color: 1, 1, 1, 1  # 텍스트 색상 설정
 
         Label:
             id: song_label
@@ -30,6 +32,7 @@
             size_hint_y: None
             height: '30dp'
             font_size: '24sp'
+            color: 0.7, 0.7, 0.7, 1  # 텍스트 색상 설정
 
         BoxLayout:
             orientation: 'vertical'
@@ -39,6 +42,9 @@
                 id: progress_bar
                 max: 100
                 value: root.progress
+                size_hint_y: None
+                height: '20dp'
+                background_color: 0.2, 0.2, 0.2, 1  # 프로그레스 바 배경색 설정
 
             GridLayout:
                 cols: 1
@@ -51,7 +57,7 @@
                     height: self.minimum_height
 
             GridLayout:
-                cols: 2
+                cols: 4
                 spacing: '10dp'
                 padding: '10dp'
 
@@ -61,6 +67,8 @@
                     size_hint: 0.5, None
                     height: '60dp'
                     font_size: '24sp'
+                    bold: True
+                    background_color: 0.2, 0.6, 0.3, 1  # 버튼 배경색 설정
                     on_release: root.check_hit(1)
 
                 Button:
@@ -69,6 +77,8 @@
                     size_hint: 0.5, None
                     height: '60dp'
                     font_size: '24sp'
+                    bold: True
+                    background_color: 0.2, 0.6, 0.3, 1  # 버튼 배경색 설정
                     on_release: root.check_hit(2)
 
                 Button:
@@ -77,6 +87,8 @@
                     size_hint: 0.5, None
                     height: '60dp'
                     font_size: '24sp'
+                    bold: True
+                    background_color: 0.2, 0.6, 0.3, 1  # 버튼 배경색 설정
                     on_release: root.check_hit(3)
 
                 Button:
@@ -85,6 +97,8 @@
                     size_hint: 0.5, None
                     height: '60dp'
                     font_size: '24sp'
+                    bold: True
+                    background_color: 0.2, 0.6, 0.3, 1  # 버튼 배경색 설정
                     on_release: root.check_hit(4)
 
 <Block>:
