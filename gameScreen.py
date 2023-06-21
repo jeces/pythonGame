@@ -51,7 +51,11 @@ class RhythmGame(BoxLayout):
 
         # 블록이 아래로 이동하도록 애니메이션 설정
         block_animation = Animation(pos=(x, 0), duration=2)
+        block_animation.bind(on_complete=self.remove_block)  # 애니메이션 완료 후 제거
         block_animation.start(block)
 
         # 블록이 떨어지는 동안에도 버튼을 누를 수 있도록 설정
         Clock.schedule_once(lambda dt: self.check_hit(random_button_num), 0.5)
+
+    def remove_block(self, animation, block):
+        self.ids.block_layout.remove_widget(block)

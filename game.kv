@@ -14,7 +14,7 @@
             pos: self.pos
             size: self.size
 
-    BoxLayout:  # 화면을 수평으로 나누는 BoxLayout 추가
+    BoxLayout:
         orientation: "horizontal"
         size_hint: 1, 1
 
@@ -35,52 +35,59 @@
                 font_size: '24sp'
 
         BoxLayout:
-        orientation: "vertical"
-        size_hint: 0.7, 1
-        padding: '10dp'
-
-        GridLayout:
-            cols: 4
-            spacing: '10dp'
+            orientation: "vertical"
+            size_hint: 0.7, 1
             padding: '10dp'
 
+            GridLayout:
+                cols: 1
+                spacing: '10dp'
+                padding: '10dp'
+
+                ProgressBar:
+                    id: progress_bar
+                    max: 100
+                    value: root.progress
+
+                BoxLayout:
+                    id: block_layout
+                    size_hint: 1, None
+                    height: self.minimum_height  # 블록 높이를 자동으로 조정
+
             BoxLayout:
-                id: block_layout
+                orientation: "horizontal"
                 size_hint: 1, None
-                height: self.minimum_height  # 블록 높이를 자동으로 조정
+                spacing: '10dp'
+                padding: '10dp'
 
-            ProgressBar:
-                id: progress_bar
-                max: 100
-                value: root.progress
+                Button:
+                    id: button_1
+                    text: "Button 1"
+                    size_hint: None, None
+                    size: 100, 100
+                    on_release: root.check_hit(1)
 
-            Button:
-                id: button_1
-                text: "Button 1"
-                size_hint: 1, None
-                size: 10, 10
-                on_release: root.check_hit(1)
+                Button:
+                    id: button_2
+                    text: "Button 2"
+                    size_hint: None, None
+                    size: 100, 100
+                    on_release: root.check_hit(2)
 
-            Button:
-                id: button_2
-                text: "Button 2"
-                size_hint: 1, None
-                size: 10, 10
-                on_release: root.check_hit(2)
+                Button:
+                    id: button_3
+                    text: "Button 3"
+                    size_hint: None, None
+                    size: 100, 100
+                    on_release: root.check_hit(3)
 
-            Button:
-                id: button_3
-                text: "Button 3"
-                size_hint: 1, None
-                size: 10, 10
-                on_release: root.check_hit(3)
+                Button:
+                    id: button_4
+                    text: "Button 4"
+                    size_hint: None, None
+                    size: 100, 100
+                    on_release: root.check_hit(4)
 
-            Button:
-                id: button_4
-                text: "Button 4"
-                size_hint: 1, None
-                size: 10, 10
-                on_release: root.check_hit(4)
 
 
 
